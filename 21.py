@@ -1,5 +1,6 @@
 from typing import *
 import math
+from utils import ListNode, list_to_linked_list
 
 """
 Merge Two Sorted Linked Lists
@@ -9,12 +10,6 @@ Merge the two lists into one sorted linked list and return the head of the new s
 
 The new list should be made up of nodes from list1 and list2.
 """
-# Definition for singly-linked list.
-class ListNode: 
-    def __init__(self, val=0, next = None):
-         self.val = val
-         self.next = next
-
 class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
         head = None
@@ -60,29 +55,6 @@ class Solution:
 
         
         return head
-            
-
-
-def list_to_linked_list(l) -> ListNode:
-
-    if len(l) == 0:
-        return None
-    
-    prevNode = None
-    head = None
-    for i in range(len(l)):
-        currNode = ListNode(l[i], None)
-        if head == None:
-            head = currNode
-            # Save the head of the list
-
-        if prevNode:
-            # Add the next node to the previous node
-            prevNode.next = currNode
-        
-        prevNode = currNode
-
-    return head
 
 
 res = Solution()

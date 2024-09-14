@@ -1,5 +1,6 @@
 from typing import *
 import math
+from utils import DoublyListNode, list_to_linked_list
 
 """
 Reorder Linked List
@@ -19,15 +20,8 @@ Notice that in the general case for a list of length = n the nodes are reordered
 
 You may not modify the values in the list's nodes, but instead you must reorder the nodes themselves.
 """
-# Definition for singly-linked list.
-class ListNode: 
-    def __init__(self, val=0, next = None, prev = None):
-         self.val = val
-         self.next = next
-         self.prev = prev
-
 class Solution:
-    def reorderList(self, head: Optional[ListNode]) -> None:
+    def reorderList(self, head: Optional[DoublyListNode]) -> None:
         if not head:
             return
 
@@ -76,28 +70,6 @@ class Solution:
         # right_pt.next = None
 
         return # head
-        
-
-def list_to_linked_list(l) -> ListNode:
-
-    if len(l) == 0:
-        return None
-    
-    prevNode = None
-    head = None
-    for i in range(len(l)):
-        currNode = ListNode(l[i], None)
-        if head == None:
-            head = currNode
-            # Save the head of the list
-
-        if prevNode:
-            # Add the next node to the previous node
-            prevNode.next = currNode
-        
-        prevNode = currNode
-
-    return head
 
 
 res = Solution()
