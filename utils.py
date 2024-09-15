@@ -54,6 +54,34 @@ def tree_to_list(root: TreeNode) -> list[TreeNode]:
 
     return res
 
+def print_dfs_tree(root: TreeNode) -> None:
+    if not root:
+        return
+    
+    curr_node = root
+    queue: list[TreeNode] = []
+    queue.append(root)
+
+    while len(queue) > 0:
+        curr_node = queue.pop(0)
+        print(f"{curr_node.val}-", end="")
+
+        if curr_node.left:
+            queue.append(curr_node.left)
+
+        if curr_node.right:
+            queue.append(curr_node.right)
+        elif curr_node.left:
+            # If not right node, but left node
+            queue.append(TreeNode(val=None))
+    
+
+    
+
+
+
+
+
 # ================= Linked Lists ============================= #
 
 # Definition for singly-linked list.
