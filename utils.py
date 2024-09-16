@@ -31,7 +31,10 @@ def list_to_tree(l: list[int]) -> TreeNode:
         queue.append(left_node)
         if right_node:
             filling_node.right = right_node
-            queue.append(right_node)
+
+            if right_node.val != None:
+                # Only keep filling for this one if not a filler node
+                queue.append(right_node)
     
     return root
 
@@ -54,7 +57,8 @@ def tree_to_list(root: TreeNode) -> list[TreeNode]:
 
     return res
 
-def print_dfs_tree(root: TreeNode) -> None:
+# Breadth-First Search 
+def print_bfs_tree(root: TreeNode) -> None:
     if not root:
         return
     
@@ -66,14 +70,49 @@ def print_dfs_tree(root: TreeNode) -> None:
         curr_node = queue.pop(0)
         print(f"{curr_node.val}-", end="")
 
+        has_child = curr_node.left or curr_node.right
+
         if curr_node.left:
             queue.append(curr_node.left)
+        elif has_child:
+            # If there is one child
+            queue.append(TreeNode(val=None))
 
         if curr_node.right:
             queue.append(curr_node.right)
-        elif curr_node.left:
-            # If not right node, but left node
+        elif has_child:
+            # If there is one child
             queue.append(TreeNode(val=None))
+    
+    print()
+
+def get_bfs_node(root: TreeNode, search_val: int) -> TreeNode:
+    if not root: return None
+
+    curr_node = root
+    queue: list[TreeNode] = []
+    queue.append(root)
+
+    while len(queue) > 0:
+        curr_node = queue.pop(0)
+        if curr_node.val == search_val:
+            return curr_node
+
+        has_child = curr_node.left or curr_node.right
+
+        if curr_node.left:
+            queue.append(curr_node.left)
+        elif has_child:
+            # If there is one child
+            queue.append(TreeNode(val=None))
+
+        if curr_node.right:
+            queue.append(curr_node.right)
+        elif has_child:
+            # If there is one child
+            queue.append(TreeNode(val=None))
+    
+    return None
     
 
     
