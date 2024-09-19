@@ -1,3 +1,6 @@
+import typing
+from collections import deque
+
 # ================= Binary Trees ============================= #
 # Definition for a binary tree node.
 class TreeNode:
@@ -156,3 +159,47 @@ def list_to_linked_list(l) -> ListNode:
 
     return head
 
+# ================= Graphs ============================= #
+
+class Node:
+    """
+    Using a forward reference to point the type of neighbors as Nodes
+    """
+    def __init__(self, val: int, neighbors: list['Node']):
+        self.val = val
+        self.neighbors = neighbors
+
+def build_graph_from_adj_list(adj_list: list[list[int]]) -> Node | None:
+    if len(adj_list) == 0:
+        return None
+    
+    # Create the list of nodes
+    graph_nodes = [Node(val, []) for val in range(1, len(adj_list)+1, 1)]
+
+    for node_idx in range(len(adj_list)):
+        curr_node = graph_nodes[node_idx]
+
+        # Update the neighbors using the adjency list
+        curr_node.neighbors = [graph_nodes[neighbor_idx-1] for neighbor_idx in adj_list[node_idx]]
+
+    # Return the input node
+    return graph_nodes[0]
+
+def build_adj_list_from_graph(node: Node) -> Node | None:
+    if not node:
+        return []
+    
+    adj_list = []
+
+    node_list = deque([node])
+    while len(node_list) > 0:
+        curr_node: Node = node_list.popleft()
+
+        adj_vals = [neighbor.val for neighbor in curr_node.neighbors]
+        adj_list.append(adj_vals)
+
+        for neighbor in curr_node.neighbors:
+            if neighbor.val > curr_node.val:
+                node_list.append(neighbor)
+    
+    return adj_list
